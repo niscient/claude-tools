@@ -76,8 +76,33 @@ def format_timestamp(ts_str):
         return ts_str
 
 
-def extract_text_from_content(content):
+def build_tool_use_result_map(records):
+    """Build a map of tool_use_id -> toolUseResult from records that carry that field."""
+    mapping = {}
+    for obj in records:
+        tur = obj.get("toolUseResult")
+        if not isinstance(tur, dict):
+            continue
+        # The matching tool_use_id lives in the tool_result block inside the message.
+        content = obj.get("message", {}).get("content", [])
+        if isinstance(content, list):
+            for block in content:
+                if isinstance(block, dict) and block.get("type") == "tool_result":
+                    tool_use_id = block.get("tool_use_id")
+                    if tool_use_id:
+                        mapping[tool_use_id] = tur
+    return mapping
+
+
+def _hunk_range(start, count):
+    """Format a unified-diff range token: omit ',count' when count is 1."""
+    return str(start) if count == 1 else f"{start},{count}"
+
+
+def extract_text_from_content(content, tool_use_result_map=None):
     """Recursively extract readable text from message content (string or list of blocks)."""
+    if tool_use_result_map is None:
+        tool_use_result_map = {}
     if isinstance(content, str):
         return content
     if isinstance(content, list):
@@ -95,12 +120,40 @@ def extract_text_from_content(content):
                 inp = block.get("input", {})
                 parts.append(f"**Tool Call: `{name}`**")
                 if isinstance(inp, dict):
-                    for k, v in inp.items():
-                        parts.append(f"- `{k}`: `{str(v)}`")
+                    if name == "Edit" and "old_string" in inp and "new_string" in inp:
+                        if "file_path" in inp:
+                            parts.append(f"- `file_path`: `{inp['file_path']}`")
+                        old_string = inp["old_string"]
+                        new_string = inp["new_string"]
+                        old_lines = old_string.splitlines()
+                        new_lines = new_string.splitlines()
+                        old_count = len(old_lines)
+                        new_count = len(new_lines)
+
+                        # Use originalFile (from the corresponding toolUseResult) to
+                        # compute the real starting line number for the hunk header.
+                        tur = tool_use_result_map.get(block.get("id", ""), {})
+                        original_file = tur.get("originalFile") if isinstance(tur, dict) else None
+                        if isinstance(original_file, str):
+                            idx = original_file.find(old_string)
+                            start = original_file[:idx].count("\n") + 1 if idx >= 0 else 1
+                            hunk_header = f"@@ -{_hunk_range(start, old_count)} +{_hunk_range(start, new_count)} @@"
+                            diff_lines = [hunk_header]
+                        else:
+                            diff_lines = []
+
+                        for line in old_lines:
+                            diff_lines.append(f"-{line}")
+                        for line in new_lines:
+                            diff_lines.append(f"+{line}")
+                        parts.append("```diff\n" + "\n".join(diff_lines) + "\n```")
+                    else:
+                        for k, v in inp.items():
+                            parts.append(f"- `{k}`: `{str(v)}`")
 
             elif btype == "tool_result":
                 inner = block.get("content", "")
-                text = extract_text_from_content(inner)
+                text = extract_text_from_content(inner, tool_use_result_map)
                 if text:
                     parts.append(f"**Tool Result:**\n```\n{text}\n```")
 
@@ -149,6 +202,7 @@ def is_skippable(obj, content_str):
 
 def build_markdown(records):
     meta = extract_metadata(records)
+    tool_use_result_map = build_tool_use_result_map(records)
     md = []
 
     # Header
@@ -179,7 +233,7 @@ def build_markdown(records):
         if is_skippable(obj, content_str):
             continue
 
-        text = extract_text_from_content(content)
+        text = extract_text_from_content(content, tool_use_result_map)
         if not text or not text.strip():
             continue
 

@@ -60,6 +60,22 @@ python translate_claude_session_jsonl_to_md.py [--force] <input.jsonl> <output.m
 - Tool results in code blocks
 - Thinking blocks as blockquotes
 
+See [example_output.md](example_output.md) for a sample transcript.
+
+### Edit tool diffs
+
+`Edit` tool calls are rendered as color-coded diffs (removed lines in red, added lines in green), using the same hunk header format as `git diff`:
+
+```
+@@ -l,s +l,s @@
+```
+
+where `l` is the starting line number and `s` is the number of lines (`,s` is omitted when `s` is 1). For more details on this format, see:
+- [Reddit: What do the signs and proceeding info mean in git diff?](https://www.reddit.com/r/git/comments/4pm67k/what_do_the_signs_and_proceeding_info_mean_in_git/)
+- [git diff-format documentation](https://git-scm.com/docs/diff-format)
+
+Hunk headers are only emitted when the JSONL log includes the full original file (via the `originalFile` field in `toolUseResult`), which allows the true starting line number to be computed. When that field is absent, only the changed lines are shown without a hunk header.
+
 ---
 
 ## Preventing Auto-Deletion of Session Files
