@@ -82,7 +82,7 @@ Hunk headers are only emitted when the JSONL log includes the full original file
 
 ## Preventing Auto-Deletion of Session Files
 
-By default, Claude Code deletes old session files after **30 days**. If you do not change this setting, your session history will be periodically wiped and there will be nothing left to export.
+By default, Claude Code deletes session files older than **30 days**. If you do not change this setting, any session history older than 30 days will be permanently lost.
 
 To prevent this, set `cleanupPeriodDays` to a large value in `~/.claude/settings.json` (aka `%userprofile%/.claude/settings.json` on Windows), e.g.:
 
