@@ -2,7 +2,16 @@
 
 These tools allow you to make quick backups of your Claude Code chat sessions to a designated output directory, and translate all chat sessions into human-readable Markdown (`.md`) files. This is useful for archiving conversations, searching past sessions, or simply keeping a local record of your Claude interactions. Tested on Windows, in theory works on Mac and Linux.
 
+---
+
 See [example_output.md](example_output.md) for an example of a readable Claude session that this script generates. The example session demonstrates renaming the export script's hardcoded config filename from `settings.ini` to `good_settings.ini`, then reverting it back to `settings.ini`.
+
+## Table of Contents
+
+- [Tool 1: `export_claude_projects_and_markdown.py`](#tool-1-export_claude_projects_and_markdownpy)
+- [Tool 2: `translate_claude_session_jsonl_to_md.py`](#tool-2-translate_claude_session_jsonl_to_mdpy)
+  - [Edit tool diffs](#edit-tool-diffs)
+- [Preventing Auto-Deletion of Session Files](#preventing-auto-deletion-of-session-files)
 
 ---
 
