@@ -1,7 +1,7 @@
 # Update export script settings file path
 
 **Session ID:** `a861002f-ae61-4c9e-aeff-1d663205528f`  
-**Working Directory:** `v:\My Drive\USTA\tools\claude_tools`  
+**Working Directory:** `v:\My Drive\claude_tools`  
 **Git Branch:** `master`  
 **Entrypoint:** claude-vscode  
 **Claude Code Version:** 2.1.107  
@@ -10,7 +10,7 @@
 
 ## 🧑 User — `22:17:14 UTC`
 
-📂 *IDE Context:* The user opened the file v:\My Drive\USTA\tools\claude_tools\export_claude_projects_and_markdown.py in the IDE. This may or may not be related to the current task.
+📂 *IDE Context:* The user opened the file v:\My Drive\claude_tools\export_claude_projects_and_markdown.py in the IDE. This may or may not be related to the current task.
 
 modify the export script SETTINGS_FILE to use good_settings.ini instead of settings.ini
 
@@ -24,7 +24,7 @@ modify the export script SETTINGS_FILE to use good_settings.ini instead of setti
 
 - `pattern`: `SETTINGS_FILE`
 
-- `path`: `v:\My Drive\USTA\tools\claude_tools\export_claude_projects_and_markdown.py`
+- `path`: `v:\My Drive\claude_tools\export_claude_projects_and_markdown.py`
 
 - `output_mode`: `content`
 
@@ -41,7 +41,7 @@ modify the export script SETTINGS_FILE to use good_settings.ini instead of setti
 
 **Tool Call: `Edit`**
 
-- `file_path`: `v:\My Drive\USTA\tools\claude_tools\export_claude_projects_and_markdown.py`
+- `file_path`: `v:\My Drive\claude_tools\export_claude_projects_and_markdown.py`
 
 ```diff
 -SETTINGS_FILE = os.path.join(SCRIPT_DIR, "settings.ini")
@@ -59,7 +59,7 @@ modify the export script SETTINGS_FILE to use good_settings.ini instead of setti
 
 **Tool Call: `Read`**
 
-- `file_path`: `v:\My Drive\USTA\tools\claude_tools\export_claude_projects_and_markdown.py`
+- `file_path`: `v:\My Drive\claude_tools\export_claude_projects_and_markdown.py`
 
 - `limit`: `30`
 
@@ -103,7 +103,7 @@ modify the export script SETTINGS_FILE to use good_settings.ini instead of setti
 
 **Tool Call: `Edit`**
 
-- `file_path`: `v:\My Drive\USTA\tools\claude_tools\export_claude_projects_and_markdown.py`
+- `file_path`: `v:\My Drive\claude_tools\export_claude_projects_and_markdown.py`
 
 ```diff
 @@ -27 +27 @@
@@ -115,7 +115,7 @@ modify the export script SETTINGS_FILE to use good_settings.ini instead of setti
 
 **Tool Result:**
 ```
-The file v:\My Drive\USTA\tools\claude_tools\export_claude_projects_and_markdown.py has been updated successfully. (file state is current in your context — no need to Read it back)
+The file v:\My Drive\claude_tools\export_claude_projects_and_markdown.py has been updated successfully. (file state is current in your context — no need to Read it back)
 ```
 
 ## 🤖 Assistant (claude-sonnet-4-6) — `22:17:25 UTC`
@@ -136,7 +136,7 @@ undo that change; the correct settings filename is settings.ini, not good_settin
 
 **Tool Call: `Edit`**
 
-- `file_path`: `v:\My Drive\USTA\tools\claude_tools\export_claude_projects_and_markdown.py`
+- `file_path`: `v:\My Drive\claude_tools\export_claude_projects_and_markdown.py`
 
 ```diff
 @@ -27 +27 @@
@@ -148,7 +148,7 @@ undo that change; the correct settings filename is settings.ini, not good_settin
 
 **Tool Result:**
 ```
-The file v:\My Drive\USTA\tools\claude_tools\export_claude_projects_and_markdown.py has been updated successfully. (file state is current in your context — no need to Read it back)
+The file v:\My Drive\claude_tools\export_claude_projects_and_markdown.py has been updated successfully. (file state is current in your context — no need to Read it back)
 ```
 
 ## 🤖 Assistant (claude-sonnet-4-6) — `22:18:32 UTC`
